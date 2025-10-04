@@ -12,7 +12,7 @@
         <body>
             Hello new page jsp
             <h1>
-                ${hellotruong}
+                ${truong}
             </h1>
             <button>Submit</button>
         </body>

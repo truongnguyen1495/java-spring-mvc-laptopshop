@@ -1,38 +1,51 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+        <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
 
-        <!-- Latest compiled and minified CSS-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-        <!-- Latest compiled JavaScript-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-        <link href="/css/create.css" rel="stylesheet">
+            <!-- Latest compiled and minified CSS-->
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+            <!-- Latest compiled JavaScript-->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+            <link href="/css/create.css" rel="stylesheet">
 
 
-        <body>
-            <div class="container">
-                <form action="/admin/user/create1" method="post" class="form-card">
-                    <h2>Create a user</h2>
+            <body>
+                <div class="container d-flex justify-content-center align-items-center min-vh-100">
+                    <div class="form-card shadow p-4 bg-white rounded" style="width: 100%; max-width: 400px;">
+                        <form:form action="/admin/user/create1" method="post" modelAttribute="newUser">
+                            <h2 class="mb-4 text-center">Create a user</h2>
 
-                    <label>Email:</label>
-                    <input type="email" name="email" required>
+                            <div class="mb-3">
+                                <label class="form-label">Email:</label>
+                                <form:input path="email" type="email" class="form-control" required="true" />
+                            </div>
 
-                    <label>Password:</label>
-                    <input type="password" name="password" required>
+                            <div class="mb-3">
+                                <label class="form-label">Password:</label>
+                                <form:input path="password" type="password" class="form-control" required="true" />
+                            </div>
 
-                    <label>Phone number:</label>
-                    <input type="text" name="phone" required>
+                            <div class="mb-3">
+                                <label class="form-label">Phone number:</label>
+                                <form:input path="phone" type="text" class="form-control" required="true" />
+                            </div>
 
-                    <label>Full Name:</label>
-                    <input type="text" name="fullname" required>
+                            <div class="mb-3">
+                                <label class="form-label">Full Name:</label>
+                                <form:input path="fullname" type="text" class="form-control" required="true" />
+                            </div>
 
-                    <label>Address:</label>
-                    <input type="text" name="address" required>
+                            <div class="mb-3">
+                                <label class="form-label">Address:</label>
+                                <form:input path="address" type="text" class="form-control" required="true" />
+                            </div>
 
-                    <button type="submit">Create</button>
-                </form>
-            </div>
-        </body>
+                            <button type="submit" class="btn btn-primary w-100">Create</button>
+                        </form:form>
+                    </div>
+                </div>
+            </body>
 
-        </html>
+            </html>
