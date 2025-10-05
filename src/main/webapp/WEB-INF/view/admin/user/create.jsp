@@ -14,7 +14,7 @@
             <body>
                 <div class="container d-flex justify-content-center align-items-center min-vh-100">
                     <div class="form-card shadow p-4 bg-white rounded" style="width: 100%; max-width: 400px;">
-                        <form:form action="/admin/user/create1" method="post" modelAttribute="newUser">
+                        <form:form action="/admin/user/create" method="post" modelAttribute="newUser">
                             <h2 class="mb-4 text-center">Create a user</h2>
 
                             <div class="mb-3">
