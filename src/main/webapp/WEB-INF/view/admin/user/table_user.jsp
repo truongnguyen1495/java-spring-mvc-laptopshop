@@ -2,13 +2,16 @@
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
+            <head><!-- Latest compiled and minified CSS-->
+                <meta charset="UTF-8">
+                <title>Users Table</title>
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+                <!-- Latest compiled JavaScript-->
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+                <link href="/css/table_user.css" rel="stylesheet">
+            </head>
 
-            <!-- Latest compiled and minified CSS-->
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-            <!-- Latest compiled JavaScript-->
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-            <link href="/css/table_user.css" rel="stylesheet">
 
             <body>
 
@@ -35,7 +38,7 @@
                                 <td>${user.email}</td>
                                 <td>${user.fullname}</td>
                                 <td>
-                                    <a href="/admin/user/view/${user.id}" class="btn btn-success btn-sm">View</a>
+                                    <a href="/admin/user/${user.id}" class="btn btn-success btn-sm">View</a>
                                     <a href="/admin/user/update/${user.id}" class="btn btn-warning btn-sm">Update</a>
                                     <a href="/admin/user/delete/${user.id}" class="btn btn-danger btn-sm">Delete</a>
                                 </td>

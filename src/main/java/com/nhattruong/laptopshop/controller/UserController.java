@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.nhattruong.laptopshop.domain.User;
@@ -46,6 +47,15 @@ public class UserController {
         System.out.println("<<<< check out  " + users);
         model.addAttribute("users1", users); // ✅ Gửi danh sách qua JSP
         return "admin/user/table_user";
+    }
+
+    @RequestMapping("/admin/user/{id}")
+    public String getUserDetailPage(Model model, @PathVariable long id) {
+        System.out.println("<<<check out" + id);
+        User user = this.userService.getUserById(id);
+        model.addAttribute("user", user);
+        model.addAttribute("id", id);
+        return "admin/user/user-detail";
     }
 
     @RequestMapping("/admin/user/create")
