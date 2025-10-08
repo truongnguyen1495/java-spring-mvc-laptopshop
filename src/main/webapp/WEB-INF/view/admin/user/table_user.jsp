@@ -39,8 +39,10 @@
                                 <td>${user.fullname}</td>
                                 <td>
                                     <a href="/admin/user/${user.id}" class="btn btn-success btn-sm">View</a>
-                                    <a href="/admin/user/update/${user.id}" class="btn btn-warning btn-sm">Update</a>
-                                    <a href="/admin/user/delete/${user.id}" class="btn btn-danger btn-sm">Delete</a>
+                                    <a href="/admin/user/user_update/${user.id}"
+                                        class="btn btn-warning btn-sm">Update</a>
+                                    <a href="/admin/user/user_delete/${user.id}"
+                                        class="btn btn-danger btn-sm">Delete</a>
                                 </td>
                             </tr>
                         </c:forEach>

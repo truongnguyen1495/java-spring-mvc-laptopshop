@@ -18,7 +18,7 @@
                 <h2 class="title">User Detail with ID = ${id}</h2>
 
                 <div class="btn-create text-end mb-3">
-                    <a href="/admin/user/user-detail" class="btn btn-primary">User Detail</a>
+                    <a href="/admin/user" class="btn btn-primary">Back</a>
                 </div>
                 <div class="container mt-4">
                     <div class="info-box mx-auto">
