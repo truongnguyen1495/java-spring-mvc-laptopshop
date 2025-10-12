@@ -17,9 +17,9 @@
                     <div class="form-card shadow p-4 bg-white rounded" style="width: 100%; max-width: 400px;">
                         <form:form action="/admin/user/user_update" method="post" modelAttribute="updateUser">
                             <h2 class="mb-4 text-center">Update a user</h2>
-                            <div class="mb-3" style="display: none;">
+                            <div class="mb-3" style="display: none">
                                 <label class="form-label">ID:</label>
-                                <form:input path="id" type="id" class="form-control" disabled="true" />
+                                <form:input path="id" type="id" class="form-control" required="true" />
                             </div>
 
                             <div class="mb-3">

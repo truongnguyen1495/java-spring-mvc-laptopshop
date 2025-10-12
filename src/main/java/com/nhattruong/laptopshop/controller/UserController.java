@@ -89,7 +89,6 @@ public class UserController {
     }
 
     @PostMapping("/admin/user/user_update")
-
     public String postUpdateUser(Model model, @ModelAttribute("newUser") User nhattruong) {
         System.out.println("<<<check out" + nhattruong);
         User currentUser = this.userService.getUserById(nhattruong.getId());

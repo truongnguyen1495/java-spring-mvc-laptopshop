@@ -1,13 +1,20 @@
 package com.nhattruong.laptopshop.domain;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
-
+@Table(name = "users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -17,6 +24,17 @@ public class User {
     private String password;
     private String phone;
     private String address;
+
+    private String avatar;
+    // role id
+    // user -many -->to one- role
+    @ManyToOne
+    @JoinColumn(name = "role_id") // foreign key column in users table
+    private Role role;
+
+    // User - one -->to many - order
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders;
 
     public long getId() {
         return id;
@@ -66,10 +84,18 @@ public class User {
         this.address = address;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     @Override
     public String toString() {
         return "User [id=" + id + ", fullname=" + fullname + ", email=" + email + ", password=" + password + ", phone="
-                + phone + ", address=" + address + "]";
+                + phone + ", address=" + address + ", avatar=" + avatar + "]";
     }
 
 }
