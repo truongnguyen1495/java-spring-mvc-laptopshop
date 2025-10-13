@@ -1,11 +1,14 @@
 package com.nhattruong.laptopshop.domain;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -20,6 +23,10 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "user_id") // foreign key column in orders table
     private User user;
+
+    // order - one -->to many - orderdetail
+    @OneToMany(mappedBy = "order")
+    List<OrderDetail> orderDetails;
 
     public long getId() {
         return id;
@@ -39,6 +46,8 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order [id=" + id + ", totalPrice=" + totalPrice + "]";
+        return "Order [id=" + id + ", totalPrice=" + totalPrice + ", user=" + user + ", orderDetails=" + orderDetails
+                + "]";
     }
+
 }
