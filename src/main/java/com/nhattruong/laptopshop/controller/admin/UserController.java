@@ -1,4 +1,4 @@
-package com.nhattruong.laptopshop.controller;
+package com.nhattruong.laptopshop.controller.admin;
 
 import java.util.List;
 
