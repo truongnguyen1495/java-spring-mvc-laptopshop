@@ -4,12 +4,21 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.nhattruong.laptopshop.domain.Role;
 import com.nhattruong.laptopshop.domain.User;
 import com.nhattruong.laptopshop.repository.UserRepository;
+import com.nhattruong.laptopshop.repository.RoleRepository;
 
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+
+    public UserService(RoleRepository roleRepository,
+            UserRepository userRepository) {
+        this.roleRepository = roleRepository;
+        this.userRepository = userRepository;
+    }
 
     public String handleHello() {
         return "Dang ky thanh cong";
@@ -21,10 +30,6 @@ public class UserService {
 
     public List<User> getAllUsersByEmail(String email) {
         return this.userRepository.findByEmail(email);
-    }
-
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
     }
 
     public User handleSaveUser(User user) {
@@ -39,5 +44,9 @@ public class UserService {
 
     public void deleteAUser(long id) {
         this.userRepository.deleteById(id);
+    }
+
+    public Role getRoleByName(String name) {
+        return this.roleRepository.findByName(name);
     }
 }

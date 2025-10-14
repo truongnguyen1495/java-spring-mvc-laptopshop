@@ -19,7 +19,21 @@
                 <title>Dashboard - SB Admin</title>
                 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
                 <link href="/css/styles.css" rel="stylesheet" />
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+                <script>
+                    $(document).ready(() => {
+                        const avatarFile = $("#avatarFile");
+                        avatarFile.change(function (e) {
+                            const imgURL = URL.createObjectURL(e.target.files[0]);
+                            $("#avatarPreview").attr("src", imgURL);
+                            $("#avatarPreview").css({ "display": "block" });
+                        });
+                    });
+                </script>
+
+
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+
             </head>
 
             <body class="sb-nav-fixed">
@@ -38,8 +52,8 @@
                                 <div class="container d-flex justify-content-center align-items-center min-vh-70">
                                     <div class="form-card shadow p-4 bg-white rounded"
                                         style="width: 100%; max-width: 400px;">
-                                        <form:form action="/admin/user/update" method="post"
-                                            modelAttribute="updateUser">
+                                        <form:form action="/admin/user/update" method="post" modelAttribute="updateUser"
+                                            enctype="multipart/form-data">
                                             <h2 class="mb-4 text-center">Update a user</h2>
                                             <div class="mb-3" style="display: none">
                                                 <label class="form-label">ID:</label>
@@ -49,7 +63,7 @@
                                             <div class="mb-3">
                                                 <label class="form-label">Email:</label>
                                                 <form:input path="email" type="email" class="form-control"
-                                                    disabled="true" />
+                                                    readonly="true" />
                                             </div>
 
 
@@ -66,11 +80,41 @@
                                                     required="true" />
                                             </div>
 
+
                                             <div class="mb-3">
                                                 <label class="form-label">Address:</label>
                                                 <form:input path="address" type="text" class="form-control"
                                                     required="true" />
+                                                <div class="row mb-4">
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Role</label>
+                                                        <form:select class="form-select" path="role.name">
+                                                            <form:option value="ADMIN">ADMIN</option>
+                                                            </form:option>
+                                                            <form:option value="USER">USER</option>
+                                                            </form:option>
+                                                        </form:select>
+
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="avatarFile" class="form-label">Avatar:</label>
+                                                        <input class="form-control" type="file" id="avatar"
+                                                            accept=".pnp, .jpg, .jpeg, .jfif" name="file" />
+
+                                                        <!-- Hiển thị avatar hiện tại -->
+                                                        <img id="avatarPreview"
+                                                            src="${updateUser.avatar != null ? updateUser.avatar : '/images/default-avatar.png'}"
+                                                            alt="Current Avatar"
+                                                            style="max-height: 200px; border-radius: 8px; margin-top: 10px;" />
+                                                    </div>
+
+
+                                                </div>
+
+
+
                                             </div>
+
 
                                             <button type="submit" class="btn btn-primary w-100">Update</button>
                                         </form:form>

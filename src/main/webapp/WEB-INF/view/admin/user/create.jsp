@@ -95,8 +95,8 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="avatarFile" class="form-label">Avatar:</label>
-                                                        <input class="form-control" type="file" id="avatarFile"
-                                                            accept=".pnp, .jpg, .jpeg, .jfif" name="nhattruongFile" />
+                                                        <input class="form-control" type="file" id="avatar"
+                                                            accept=".pnp, .jpg, .jpeg, .jfif" name="file" />
                                                     </div>
 
                                                 </div>
@@ -109,6 +109,8 @@
                                                 <div class="text-center">
                                                     <button type="submit" class="btn btn-primary px-4">Create</button>
                                                 </div>
+                                            </div>
+
                                         </form:form>
                                     </div>
                                 </div>
