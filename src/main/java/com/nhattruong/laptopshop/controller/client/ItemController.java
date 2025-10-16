@@ -4,11 +4,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class HomPageController {
-
-    @GetMapping("/")
-    public String getHomePage() {
-        return "client/homepage/show";
+public class ItemController {
+    @GetMapping("/product")
+    public String getMethodName() {
+        return "client/product/detail";
     }
 
 }

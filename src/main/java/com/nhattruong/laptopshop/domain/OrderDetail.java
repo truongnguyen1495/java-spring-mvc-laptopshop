@@ -1,9 +1,5 @@
 package com.nhattruong.laptopshop.domain;
 
-import java.util.List;
-
-import org.springframework.security.access.method.P;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

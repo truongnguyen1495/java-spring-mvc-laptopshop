@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.nhattruong.laptopshop.domain.User;
 import com.nhattruong.laptopshop.service.UploadService;
 import com.nhattruong.laptopshop.service.UserService;
+
+import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -65,26 +70,35 @@ public class UserController {
     }
 
     @PostMapping("/admin/user/create")
-    public String requestMethodName(Model model, @ModelAttribute("newUser") User nhattruong,
+    public String requestMethodName(Model model,
+            @ModelAttribute("newUser") @Validated User nhattruong,
+            BindingResult newUseBindingResult,
             @RequestParam("file") MultipartFile file) {
 
-        String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+        List<FieldError> errors = newUseBindingResult.getFieldErrors();
+        for (FieldError error : errors) {
+            System.out.println(error.getField() + " - " + error.getDefaultMessage());
+        }
+        // Nếu có lỗi form -> quay lại trang update
+        if (newUseBindingResult.hasErrors()) {
+            return "/admin/user/create";
+        } else {
+            String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
 
-        String hashPassword = this.passwordEncoder.encode(nhattruong.getPassword());
-        nhattruong.setAvatar(avatar);
-        nhattruong.setPassword(hashPassword);
-        nhattruong.setRole(this.userService.getRoleByName(nhattruong.getRole().getName()));
-        this.userService.handleSaveUser(nhattruong);
+            String hashPassword = this.passwordEncoder.encode(nhattruong.getPassword());
+            nhattruong.setAvatar(avatar);
+            nhattruong.setPassword(hashPassword);
+            nhattruong.setRole(this.userService.getRoleByName(nhattruong.getRole().getName()));
 
-        // String test = this.userService.handleHello();
-        // model.addAttribute("truong", test);
-        // System.out.println("run here " + nhattruong);
-        return "redirect:/admin/user"; // ✅ Sau khi lưu, quay lại trang danh sách
-    }
+            // save
+            this.userService.handleSaveUser(nhattruong);
 
-    private void uploadService(MultipartFile file, String string) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'uploadService'");
+            // String test = this.userService.handleHello();
+            // model.addAttribute("truong", test);
+            // System.out.println("run here " + nhattruong);
+            return "redirect:/admin/user"; // ✅ Sau khi lưu, quay lại trang danh sách
+        }
+
     }
 
     // show chi tiết user
@@ -108,21 +122,48 @@ public class UserController {
     }
 
     @PostMapping("/admin/user/update")
-    public String postUpdateUser(Model model, @ModelAttribute("newUser") User nhattruong) {
+    public String postUpdateUser(Model model,
+            @ModelAttribute("updateUser") @Valid User nhattruong,
+            BindingResult newUseBindingResult,
+            @RequestParam("file") MultipartFile file) {
+
         System.out.println("<<<check out" + nhattruong);
         User currentUser = this.userService.getUserById(nhattruong.getId());
-        // String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+
+        List<FieldError> errors = newUseBindingResult.getFieldErrors();
+        for (FieldError error : errors) {
+            System.out.println(error.getField() + " - " + error.getDefaultMessage());
+        }
+
+        // Nếu có lỗi form -> quay lại trang update
+        if (newUseBindingResult.hasErrors()) {
+            return "/admin/user/update";
+        }
+
         if (currentUser != null) {
+            // Avatar (chỉ cập nhật khi upload mới)
+            String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+            if (avatar != null && !avatar.isEmpty()) {
+                currentUser.setAvatar(avatar); // chỉ cập nhật khi có file mới
+            }
+
+            // // có thể cho phép password để trống — chỉ update nếu có thay đổi:
+            // if (currentUser.getPassword() != null &&
+            // !currentUser.getPassword().isBlank()) {
+            // currentUser.setPassword(passwordEncoder.encode(currentUser.getPassword()));
+            // }
+
             currentUser.setAddress(nhattruong.getAddress());
             currentUser.setEmail(nhattruong.getEmail());
             currentUser.setFullname(nhattruong.getFullname());
             currentUser.setPhone(nhattruong.getPhone());
             currentUser.setRole(this.userService.getRoleByName(nhattruong.getRole().getName()));
-            // currentUser.setAvatar(avatar);
-
-            this.userService.handleSaveUser(currentUser);
         }
+        // save
+        this.userService.handleSaveUser(currentUser);
+        // ✅ Sau khi update thành công thì redirect về danh sách user
         return "redirect:/admin/user";
+
     }
 
     /// Delete user
