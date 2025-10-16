@@ -1,23 +1,42 @@
 package com.nhattruong.laptopshop.domain;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "products")
-public class Products {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @NotBlank(message = "Product name is required.")
+    @Size(min = 3, max = 100, message = "Product name must be between 3 and 100 characters.")
     private String name;
-    private double price;
+
+    @NotNull(message = "Price is required.")
+    @DecimalMin(value = "0.01", inclusive = true, message = "Price must be greater than 0.")
+    @Digits(integer = 10, fraction = 2, message = "Invalid price format (max 2 decimal places).")
+    private BigDecimal price; // BigDecimal dùng cho tiền tệ
+
     private String image;
     private String detailDesc;
     private String shortDesc;
+
+    @NotNull(message = "Quantity is required.")
+    @Min(value = 1, message = "Quantity must be at least 1.")
     private long quantity;
     private long sold;
     private String factory;
@@ -38,11 +57,11 @@ public class Products {
         this.name = name;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

@@ -30,6 +30,34 @@
                         });
                     });
                 </script>
+                <script>
+                    $(document).ready(() => {
+                        const priceInput = $("#priceInput");
+
+                        // 🔹 Chỉ cho nhập số, tự động format dấu chấm (1.000.000)
+                        priceInput.on("input", function () {
+                            let value = $(this).val().replace(/\D/g, ""); // bỏ hết ký tự không phải số
+                            if (value !== "") {
+                                $(this).val(Number(value).toLocaleString("vi-VN"));
+                            } else {
+                                $(this).val("");
+                            }
+                        });
+
+                        // 🔹 Nếu Spring load lại giá (VD: sau validate lỗi)
+                        let initValue = priceInput.val().replace(/\D/g, "");
+                        if (initValue !== "") {
+                            priceInput.val(Number(initValue).toLocaleString("vi-VN"));
+                        }
+
+                        // 🔹 Trước khi submit: bỏ dấu chấm để gửi đúng giá trị
+                        $("form").on("submit", function () {
+                            let clean = priceInput.val().replace(/\D/g, "");
+                            priceInput.val(clean);
+                        });
+                    });
+                </script>
+
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 
 
@@ -53,38 +81,60 @@
                                             modelAttribute="newProduct" enctype="multipart/form-data">
 
 
+                                            <div class="col-md-12">
+                                                <c:set var="errorName">
+                                                    <form:errors path="name" cssClass="invalid-feedback" />
+                                                </c:set>
+                                                <label class="form-label">Tên sản phẩm:</label>
+                                                <form:input path="name" type="text"
+                                                    class="form-control ${not empty errorName ? 'is-invalid':''}"
+                                                    required="true" />
+                                                <form:errors path="name" cssClass="invalid-feedback" />
 
-                                            <div class="row mb-3">
-                                                <div class="col-md-6">
-                                                    <label class="form-label">Name:</label>
-                                                    <form:input path="name" type="text" class="form-control"
-                                                        required="true" />
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label class="form-label">Price:</label>
-                                                    <form:input path="price" type="text" class="form-control"
-                                                        required="true" />
-                                                </div>
                                             </div>
-                                            <div class="mb-3">
+                                            <div class="row mb-3">
+
+
                                                 <div class="col-md-6">
-                                                    <label class="form-label">Quantity</label>
-                                                    <form:input path="quantity" type="text" class="form-control"
-                                                        required="true" />
+                                                    <c:set var="errorPrice">
+                                                        <form:errors path="price" cssClass="invalid-feedback" />
+                                                    </c:set>
+                                                    <label class="form-label">Price:</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">VNĐ</span>
+                                                        <form:input path="price" type="text"
+                                                            class="form-control ${not empty errorPrice ? 'is-invalid' : ''} "
+                                                            id="priceInput" required="true" />
+                                                    </div>
+                                                    ${errorPrice}
                                                 </div>
 
+
+                                                <div class="col-md-6">
+                                                    <c:set var="errorQuantity">
+                                                        <form:errors path="quantity" cssClass="invalid-feedback" />
+                                                    </c:set>
+                                                    <label class="form-label">Quantity</label>
+                                                    <form:input path="quantity" type="text"
+                                                        class="form-control ${not empty errorQuantity ? 'is-invalid':''}"
+                                                        required="true" />
+                                                    ${errorQuantity}
+                                                </div>
                                             </div>
 
                                             <div class="col-md-12">
                                                 <label class="form-label">Detail Description:</label>
-                                                <form:input path="detailDesc" type="text" class="form-control"
+                                                <form:textarea path="detailDesc" class="form-control" rows="5"
+                                                    style="resize: vertical; font-size:16px; padding:10px; line-height:1.5;"
                                                     required="true" />
                                             </div>
                                             <div class="col-md-12">
                                                 <label class="form-label">Short Description:</label>
-                                                <form:input path="shortDesc" type="text" class="form-control"
+                                                <form:textarea path="shortDesc" class="form-control" rows="5"
+                                                    style="resize: vertical; font-size:16px; padding:10px; line-height:1.5;"
                                                     required="true" />
                                             </div>
+
 
 
                                             <div>
@@ -93,19 +143,19 @@
                                                     <div class="col-md-6">
                                                         <label class="form-label">Factory</label>
                                                         <form:select class="form-select" path="factory">
-                                                            <form:option value="APPLE">Apple(Macbook)</option>
+                                                            <form:option value="APPLE">Apple(Macbook)
                                                             </form:option>
-                                                            <form:option value="ASUS">Asus</option>
+                                                            <form:option value="ASUS">Asus
                                                             </form:option>
-                                                            <form:option value="DELL">Dell</option>
+                                                            <form:option value="DELL">Dell
                                                             </form:option>
-                                                            <form:option value="HP">Hp</option>
+                                                            <form:option value="HP">Hp
                                                             </form:option>
-                                                            <form:option value="MSI">MSI </option>
+                                                            <form:option value="MSI">MSI
                                                             </form:option>
-                                                            <form:option value="LEVONO">Levono</option>
+                                                            <form:option value="LEVONO">Levono
                                                             </form:option>
-                                                            <form:option value="ACER">Acer</option>
+                                                            <form:option value="ACER">Acer
                                                             </form:option>
 
 
@@ -114,17 +164,17 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label class="form-label">Target</label>
-                                                        <form:select class="form-select" path="factory">
-                                                            <form:option value="GAMING">Gaming</option>
+                                                        <form:select class="form-select" path="target">
+                                                            <form:option value="GAMING">Gaming
                                                             </form:option>
                                                             <form:option value="STUDENT_WORK_OFFICE">Sinh viên - Văn
-                                                                Phòng</option>
+                                                                Phòng
                                                             </form:option>
-                                                            <form:option value="GRAPHIC">Đồ họa </option>
+                                                            <form:option value="GRAPHIC">Đồ họa
                                                             </form:option>
-                                                            <form:option value="EMTREPRENEUR">Doanh nhân</option>
+                                                            <form:option value="EMTREPRENEUR">Doanh nhân
                                                             </form:option>
-                                                            <form:option value="SLIM_LIGHTWEIGHT">Mỏng nhẹ</option>
+                                                            <form:option value="SLIM_LIGHTWEIGHT">Mỏng nhẹ
                                                             </form:option>
 
                                                         </form:select>

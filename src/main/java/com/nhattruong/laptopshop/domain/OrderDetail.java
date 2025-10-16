@@ -28,7 +28,7 @@ public class OrderDetail { // chi tiet don hang
     // orderdetail - many to one - product
     @ManyToOne
     @JoinColumn(name = "product_id") // foreign key column in order_details table
-    private Products product;
+    private Product product;
 
     public long getId() {
         return id;

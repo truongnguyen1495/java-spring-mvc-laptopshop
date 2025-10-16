@@ -51,8 +51,8 @@ public class UserController {
     // return "hello";
     // }
 
-    @RequestMapping("/admin/user")
-    public String getCreateUserPage(Model model) {
+    @GetMapping("/admin/user")
+    public String getUserPage(Model model) {
         List<User> users = this.userService.getAllUsers();
         // System.out.println("<<<< check out " + users);
         model.addAttribute("users1", users); // ✅ Gửi danh sách qua JSP
@@ -62,7 +62,7 @@ public class UserController {
 
     // tao moi user
     @GetMapping("/admin/user/create")
-    public String getUserPage(Model model) {
+    public String getCreateUserPage(Model model) {
 
         model.addAttribute("newUser", new User());
 
@@ -70,7 +70,7 @@ public class UserController {
     }
 
     @PostMapping("/admin/user/create")
-    public String requestMethodName(Model model,
+    public String postCreateUserPage(Model model,
             @ModelAttribute("newUser") @Validated User nhattruong,
             BindingResult newUseBindingResult,
             @RequestParam("file") MultipartFile file) {
