@@ -4,7 +4,7 @@
 
             <head><!-- Latest compiled and minified CSS-->
                 <meta charset="UTF-8">
-                <title>Users Table</title>
+                <title>Users Detail</title>
                 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
                 <!-- Latest compiled JavaScript-->
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -30,9 +30,17 @@
                     <div id="layoutSidenav_content">
                         <main>
                             <div class="container-fluid px-4">
-                                <h1 class="mt-4">Dashboard</h1>
+                                <h1 class="mt-4">User Detail with ID = ${id}</h1>
+                                <div>
+                                    <nav aria-label="breadcrumb">
+                                        <ol class="breadcrumb">
+                                            <li class="breadcrumb-item"><a href="/admin/user">Admin</a></li>
+                                            <li class="breadcrumb-item active" aria-current="page">User detail
+                                            </li>
+                                        </ol>
+                                    </nav>
+                                </div>
 
-                                <h2 class="title">User Detail with ID = ${id}</h2>
                                 <div class="btn-create text-end mb-3">
                                     <a href="/admin/user" class="btn btn-primary">Back</a>
                                 </div>

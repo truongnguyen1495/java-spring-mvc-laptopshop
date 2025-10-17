@@ -64,32 +64,26 @@
                                                         class="form-control ${not empty errorEmail ? 'is-invalid':''}" />
                                                     <form:errors path="email" cssClass="invalid-feedback" />
                                                 </div>
-
-                                                <!-- Password -->
-                                                <div class="col-md-6">
-                                                    <c:set var="errorPassword">
-                                                        <form:errors path="password" cssClass="invalid-feedback" />
-                                                    </c:set>
-                                                    <label class="form-label">Password:</label>
-                                                    <form:input path="password" type="password"
-                                                        class="form-control ${not empty errorPassword ? 'is-invalid':''}"
-                                                        required="true" />
-
-                                                    <form:errors path="password" cssClass="invalid-feedback" />
-                                                </div>
-                                            </div>
-
-                                            <!-- Phone -->
-                                            <div class="row mb-3">
+                                                <!-- Phone -->
                                                 <div class="col-md-6">
                                                     <c:set var="errorPhone">
                                                         <form:errors path="phone" cssClass="invalid-feedback" />
                                                     </c:set>
                                                     <label class="form-label">Phone number:</label>
                                                     <form:input path="phone" type="text"
-                                                        class="form-control ${not empty errorPhone ? 'is-invalid':''}"
-                                                        required="true" />
+                                                        class="form-control ${not empty errorPhone ? 'is-invalid':''}" />
                                                     <form:errors path="phone" cssClass="invalid-feedback" />
+                                                </div>
+
+
+                                            </div>
+
+
+                                            <div class="row mb-3">
+                                                <!-- Address -->
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Address:</label>
+                                                    <form:input path="address" type="text" class="form-control" />
                                                 </div>
 
                                                 <!-- Full Name -->
@@ -99,17 +93,22 @@
                                                     </c:set>
                                                     <label class="form-label">Full Name:</label>
                                                     <form:input path="fullname" type="text"
-                                                        class="form-control ${not empty errorFullname ? 'is-invalid':''}"
-                                                        required="true" />
+                                                        class="form-control ${not empty errorFullname ? 'is-invalid':''}" />
                                                     ${errorFullname}
                                                 </div>
                                             </div>
-                                            <!-- Address -->
-                                            <div class="mb-3">
-                                                <label class="form-label">Address:</label>
-                                                <form:input path="address" type="text" class="form-control"
-                                                    required="true" />
+                                            <!-- Password -->
+                                            <div class="col-md-6">
+                                                <c:set var="errorPassword">
+                                                    <form:errors path="password" cssClass="invalid-feedback" />
+                                                </c:set>
+                                                <label class="form-label">Password:</label>
+                                                <form:input path="password" type="password"
+                                                    class="form-control ${not empty errorPassword ? 'is-invalid':''}" />
+
+                                                <form:errors path="password" cssClass="invalid-feedback" />
                                             </div>
+
                                             <!-- Role -->
                                             <div class="row mb-4">
                                                 <div class="col-md-6">

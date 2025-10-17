@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.nhattruong.laptopshop.domain.Role;
 import com.nhattruong.laptopshop.domain.User;
+
+import com.nhattruong.laptopshop.domain.dto.RegisterDTO;
 import com.nhattruong.laptopshop.repository.UserRepository;
 import com.nhattruong.laptopshop.repository.RoleRepository;
 
@@ -18,6 +20,7 @@ public class UserService {
             UserRepository userRepository) {
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
+
     }
 
     public String handleHello() {
@@ -48,5 +51,17 @@ public class UserService {
 
     public Role getRoleByName(String name) {
         return this.roleRepository.findByName(name);
+    }
+
+    // Hàm Chuyển đổi RegisterDTO -> User
+    public User RegisterDTOtoUser(RegisterDTO registerDTO) {
+
+        User user = new User();
+
+        user.setFullname(registerDTO.getFirstName() + " " + registerDTO.getLastName());
+        user.setEmail(registerDTO.getEmail());
+        user.setPhone(registerDTO.getPhone());
+        user.setPassword(registerDTO.getPassword());
+        return user;
     }
 }
