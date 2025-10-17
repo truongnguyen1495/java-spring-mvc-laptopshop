@@ -10,11 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import com.nhattruong.laptopshop.service.UploadService;
 import com.nhattruong.laptopshop.domain.Product;
-import com.nhattruong.laptopshop.domain.User;
+
 import com.nhattruong.laptopshop.service.ProductService;
 
 import jakarta.validation.Valid;
@@ -32,10 +33,20 @@ public class ProductController {
 
     // show list product
     @GetMapping("/admin/product")
-    public String getDetailProductPage(Model model) {
-        List<Product> product = this.productService.getALLProduct();
+    public String getAllProductPage(Model model) {
+        List<Product> product = this.productService.getAllProduct();
         model.addAttribute("product", product);
         return "admin/product/show";
+    }
+
+    // show chi tiết product
+    @RequestMapping("/admin/product/{id}")
+    public String getUserDetailPage(Model model, @PathVariable long id) {
+
+        Product product = this.productService.getProductById(id);
+        model.addAttribute("products", product);
+        model.addAttribute("id", id);
+        return "admin/product/detail";
     }
 
     // create a product

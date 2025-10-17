@@ -23,7 +23,7 @@ public class ProductService {
         return this.productRepository.findById(id);
     }
 
-    public List<Product> getALLProduct() {
+    public List<Product> getAllProduct() {
         return this.productRepository.findAll();
     }
 
