@@ -21,6 +21,7 @@
                 <link href="/css/styles.css" rel="stylesheet" />
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
                 <script>
+                    // ✅ Hàm xem trước ảnh 
                     $(document).ready(() => {
                         const avatarFile = $("#avatarFile");
                         avatarFile.change(function (e) {
@@ -30,9 +31,26 @@
                         });
                     });
                 </script>
+
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-
-
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+                    rel="stylesheet">
+                <script>
+                    // ✅ Hàm bật/tắt xem mật khẩu
+                    function togglePassword(inputId, btn) {
+                        const input = document.getElementById(inputId);
+                        const icon = btn.querySelector("i");
+                        if (input.type === "password") {
+                            input.type = "text";
+                            icon.classList.remove("bi-eye");
+                            icon.classList.add("bi-eye-slash");
+                        } else {
+                            input.type = "password";
+                            icon.classList.remove("bi-eye-slash");
+                            icon.classList.add("bi-eye");
+                        }
+                    }
+                </script>
             </head>
 
 
@@ -98,45 +116,59 @@
                                                 </div>
                                             </div>
                                             <!-- Password -->
-                                            <div class="col-md-6">
-                                                <c:set var="errorPassword">
-                                                    <form:errors path="password" cssClass="invalid-feedback" />
-                                                </c:set>
-                                                <label class="form-label">Password:</label>
-                                                <form:input path="password" type="password"
-                                                    class="form-control ${not empty errorPassword ? 'is-invalid':''}" />
-
-                                                <form:errors path="password" cssClass="invalid-feedback" />
-                                            </div>
-
-                                            <!-- Role -->
-                                            <div class="row mb-4">
+                                            <div class="row mb-3">
                                                 <div class="col-md-6">
-                                                    <label class="form-label">Role</label>
-                                                    <form:select class="form-select" path="role.name">
-                                                        <form:option value="ADMIN">ADMIN</form:option>
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        <c:set var="errorPassword">
+                                                            <form:errors path="password" cssClass="invalid-feedback" />
+                                                        </c:set>
+                                                        <form:input class="form-control" type="password"
+                                                            cssClass="form-control ${not empty errorPassword ? 'is-invalid' : ''}"
+                                                            placeholder="Create a password" path="password" />
+                                                        <label> Password</label>
+                                                        <form:errors path="password" cssClass="invalid-feedback" />
+                                                        <!-- Show/hide Password -->
+                                                        <button type="button"
+                                                            class="btn btn-sm btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-2"
+                                                            onclick="togglePassword('password', this)">
+                                                            <i class="bi bi-eye"></i>
+                                                        </button>
+                                                    </div>
 
-                                                        <form:option value="USER">USER </form:option>
-                                                    </form:select>
+
+
+
 
                                                 </div>
 
-                                                <!-- Avatar-->
-                                                <div class="col-md-6">
-                                                    <label for="avatarFile" class="form-label">Avatar:</label>
-                                                    <input class="form-control" type="file" id="avatarFile"
-                                                        accept=".png, .jpg, .jpeg, .jfif" name="file" />
-                                                </div>
-                                                <div class="col mb-6">
-                                                    <!-- Thẻ img hiển thị avatar sau khi chọn file -->
-                                                    <img id="avatarPreview" alt="avatar preview"
-                                                        style="max-height: 250px; display: none; border-radius: 8px; border: 1px solid #ddd;" />
-                                                </div>
-                                            </div>
+                                                <!-- Role -->
+                                                <div class="row mb-4">
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Role</label>
+                                                        <form:select class="form-select" path="role.name">
+                                                            <form:option value="ADMIN">ADMIN</form:option>
 
-                                            <div class="text-center">
-                                                <button type="submit" class="btn btn-primary px-4">Create</button>
-                                            </div>
+                                                            <form:option value="USER">USER </form:option>
+                                                        </form:select>
+
+                                                    </div>
+
+                                                    <!-- Avatar-->
+                                                    <div class="col-md-6">
+                                                        <label for="avatarFile" class="form-label">Avatar:</label>
+                                                        <input class="form-control" type="file" id="avatarFile"
+                                                            accept=".png, .jpg, .jpeg, .jfif" name="file" />
+                                                    </div>
+                                                    <div class="col mb-6">
+                                                        <!-- Thẻ img hiển thị avatar sau khi chọn file -->
+                                                        <img id="avatarPreview" alt="avatar preview"
+                                                            style="max-height: 250px; display: none; border-radius: 8px; border: 1px solid #ddd;" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="text-center">
+                                                    <button type="submit" class="btn btn-primary px-4">Create</button>
+                                                </div>
 
 
                                         </form:form>
