@@ -1,6 +1,6 @@
 package com.nhattruong.laptopshop.repository;
 
-import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -16,8 +16,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     void deleteById(long id);
 
-    List<User> findByEmail(String email);
+    Optional<User> findByEmail(String email);
 
     User findById(long id);
+
+    boolean existsByEmail(String email);
 
 }

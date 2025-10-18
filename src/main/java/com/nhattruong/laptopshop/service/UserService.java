@@ -1,7 +1,9 @@
 package com.nhattruong.laptopshop.service;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.nhattruong.laptopshop.domain.Role;
@@ -15,11 +17,13 @@ import com.nhattruong.laptopshop.repository.RoleRepository;
 public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public UserService(RoleRepository roleRepository,
-            UserRepository userRepository) {
+            UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
 
     }
 
@@ -31,7 +35,7 @@ public class UserService {
         return this.userRepository.findAll();
     }
 
-    public List<User> getAllUsersByEmail(String email) {
+    public Optional<User> getAllUsersByEmail(String email) {
         return this.userRepository.findByEmail(email);
     }
 
@@ -54,7 +58,7 @@ public class UserService {
     }
 
     // Hàm Chuyển đổi RegisterDTO -> User
-    public User RegisterDTOtoUser(RegisterDTO registerDTO) {
+    public User registerDTOtoUser(RegisterDTO registerDTO) {
 
         User user = new User();
 
@@ -63,5 +67,25 @@ public class UserService {
         user.setPhone(registerDTO.getPhone());
         user.setPassword(registerDTO.getPassword());
         return user;
+    }
+
+    // Hàm xử lý kiểm tra password
+    public User handleLogin(String email, String password) {
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            // So sánh password
+            if (passwordEncoder.matches(password, user.getPassword())) {
+                return user;
+            }
+        }
+
+        return null; // Sai email hoặc password
+    }
+
+    public boolean checkEmailExist(String email) {
+
+        return this.userRepository.existsByEmail(email);
     }
 }

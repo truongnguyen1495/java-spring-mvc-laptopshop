@@ -36,8 +36,8 @@ public class User {
     @NotNull
     @Email(message = "Email không hợp lệ. Vui lòng nhập đúng định dạng (ví dụ: ten@gmail.com)", regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")
     private String email;
-    @NotNull
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$", message = "Mật khẩu phải có ít nhất 8 ký tự, gồm 1 chữ hoa, 1 chữ thường, 1 số và 1  ký tự đặc biệt @$!%*?&")
+
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9\\s]).*[A-Za-z\\d\\S]{8,}$", message = "Mật khẩu phải có ít nhất 8 ký tự, gồm 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt bất kỳ.")
     private String password;
 
     @NotBlank(message = "Số điện thoại không được để trống")

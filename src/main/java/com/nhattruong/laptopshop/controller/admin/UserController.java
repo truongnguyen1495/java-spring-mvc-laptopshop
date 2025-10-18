@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.annotation.Validated;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -72,15 +72,20 @@ public class UserController {
     @PostMapping("/admin/user/create")
     public String postCreateUserPage(
             @ModelAttribute("newUser") @Valid User nhattruong,
-            BindingResult newUseBindingResult,
+            BindingResult newUserBindingResult,
             @RequestParam("file") MultipartFile file) {
 
-        List<FieldError> errors = newUseBindingResult.getFieldErrors();
+        // ✅ Kiểm tra email đã tồn tại chưa
+        if (this.userService.checkEmailExist(nhattruong.getEmail())) {
+            newUserBindingResult.rejectValue("email", "error.email", "Email đã tồn tại");
+        }
+
+        List<FieldError> errors = newUserBindingResult.getFieldErrors();
         for (FieldError error : errors) {
             System.out.println(error.getField() + " - " + error.getDefaultMessage());
         }
         // Nếu có lỗi form -> quay lại trang update
-        if (newUseBindingResult.hasErrors()) {
+        if (newUserBindingResult.hasErrors()) {
             return "/admin/user/create";
         } else {
             String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");

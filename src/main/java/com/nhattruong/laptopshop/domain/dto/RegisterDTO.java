@@ -23,8 +23,7 @@ public class RegisterDTO {
     @Pattern(regexp = "^(0|\\+?84)[0-9]{9}$", message = "Số điện thoại không hợp lệ (phải bắt đầu bằng 0, 84 hoặc +84 và có 10 số)")
     private String phone;
 
-    @NotNull
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$", message = "Mật khẩu phải có ít nhất 8 ký tự, gồm 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt @$!%*?&")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9\\s]).*[A-Za-z\\d\\S]{8,}$", message = "Mật khẩu phải có ít nhất 8 ký tự, gồm 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt bất kỳ.")
     private String password;
 
     @NotBlank(message = "Vui lòng nhập lại mật khẩu để xác nhận")
